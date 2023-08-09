@@ -1,0 +1,35 @@
+--- # Nats config
+spring:
+  nats:
+    #   是否启用nats
+    enable: true
+    #   nats-server ip
+    host: 127.0.0.1
+    #   port 默认4222
+    port: 4222
+    #   是否在同一连接中收到发布的信息
+    no-echo: false
+    #   连接名称
+    connection-name: TZ_APPLICATION
+    #   连接超时
+    connection-timeout: 2s
+    #   主题是否支持utf8
+    utf8-support: true
+    #   缓存大小
+    buffer-size: 65536
+    #   断开连接时间
+    drain-timeout: 20s
+    max-pings-out: 2
+    #   重连次数 -1: 一直重连
+    max-reconnects: -1
+    no-headers: false
+    #   不重连
+    no-reconnect: false
+    #   ping的间隔
+    ping-interval: 1200
+
+
+---
+spring:
+  main:
+    allow-bean-definition-overriding: true
