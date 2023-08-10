@@ -70,18 +70,18 @@ public class NatsAutoConfiguration {
 
     @Bean
     public NatsLiteHandler cloudMidisNatsLite() {
-        CloudMidisNatsLiteHandler midisNatsLiteHandler = new CloudMidisNatsLiteHandler();
+        CloudMidisNatsLiteHandler cloudMidisNatsLiteHandler = new CloudMidisNatsLiteHandler();
         NatsLiteFactoryBean factoryBean = new NatsLiteFactoryBean();
-        factoryBean.setHandler(midisNatsLiteHandler);
+        factoryBean.setHandler(cloudMidisNatsLiteHandler);
         return factoryBean.getObject();
     }
 
 
     @Bean
     public NatsLiteHandler audioNatsLite() {
-        AudioLineNatsLiteHandler midisNatsLiteHandler = new AudioLineNatsLiteHandler();
+        AudioLineNatsLiteHandler audioLineNatsLiteHandler = new AudioLineNatsLiteHandler();
         NatsLiteFactoryBean factoryBean = new NatsLiteFactoryBean();
-        factoryBean.setHandler(midisNatsLiteHandler);
+        factoryBean.setHandler(audioLineNatsLiteHandler);
         return factoryBean.getObject();
     }
 
