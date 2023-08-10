@@ -10,8 +10,7 @@ import org.springframework.stereotype.Component;
  * @description :
  */
 
-@Component
-public class MidisNatsHandler extends AbstractNatsHandler {
+public class MidisNatsLiteHandler extends AbstractNatsLiteHandler {
 
 
 
@@ -29,7 +28,7 @@ public class MidisNatsHandler extends AbstractNatsHandler {
 
 
 
-    public MidisNatsHandler() {
+    public MidisNatsLiteHandler() {
         this.clientType = ClientType.Midis;
     }
 

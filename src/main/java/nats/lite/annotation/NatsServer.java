@@ -17,5 +17,5 @@ public @interface NatsServer {
     /**
      * 监听器类型（APPLICATION：业务，CloudMidis：中台 , Midis: ）
      */
-    ClientType proxyClient() default ClientType.APPLICATION;
+    ClientType proxyClient() default ClientType.Application;
 }

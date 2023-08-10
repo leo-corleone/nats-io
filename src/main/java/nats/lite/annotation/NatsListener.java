@@ -20,5 +20,5 @@ public @interface NatsListener {
     /**
      * 监听器类型（APPLICATION：业务，CloudMidis：中台 , Midis: ）
      */
-    ClientType value() default ClientType.APPLICATION;
+    ClientType value() default ClientType.Application;
 }

@@ -12,7 +12,7 @@ import nats.lite.example.domain.NatsData;
 
 
 
-@NatsServer(proxyClient = ClientType.APPLICATION)
+@NatsServer(proxyClient = ClientType.Application)
 public interface NatsCloudService {
 
 

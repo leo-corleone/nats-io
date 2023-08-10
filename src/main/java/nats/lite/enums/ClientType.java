@@ -21,7 +21,7 @@ public enum ClientType {
     /**
      * 业务客户端
      */
-    APPLICATION,
+    Application,
 
 
     /**

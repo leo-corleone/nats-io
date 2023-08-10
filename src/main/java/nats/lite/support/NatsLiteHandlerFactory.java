@@ -15,12 +15,12 @@ import java.util.Set;
  * @time 2023/3/16
  * @description : 用于获取natsHandler实例的工厂类
  */
-public class NatsHandlerFactory {
+public class NatsLiteHandlerFactory {
 
-    private static final Map<ClientType, NatsHandler> HANDLER_MAP = new HashMap<>();
+    private static final Map<ClientType, NatsLiteHandler> HANDLER_MAP = new HashMap<>();
 
 
-    private NatsHandlerFactory(){
+    private NatsLiteHandlerFactory(){
 
     }
 
@@ -29,9 +29,9 @@ public class NatsHandlerFactory {
      * @param clientType 任务类型
      * @return 任务类型处理器
      */
-    public static NatsHandler getHandler(ClientType clientType){
+    public static NatsLiteHandler getHandler(ClientType clientType){
 
-        NatsHandler handler = HANDLER_MAP.get(clientType);
+        NatsLiteHandler handler = HANDLER_MAP.get(clientType);
         if (handler == null){
             refresh();
         }
@@ -44,10 +44,10 @@ public class NatsHandlerFactory {
     private static void refresh(){
 
         Reflections ref = new Reflections(new ConfigurationBuilder().setUrls(ClasspathHelper.forPackage("nats.lite")));
-        Set<Class<? extends AbstractNatsHandler>> clazzSet = ref.getSubTypesOf(AbstractNatsHandler.class);
+        Set<Class<? extends AbstractNatsLiteHandler>> clazzSet = ref.getSubTypesOf(AbstractNatsLiteHandler.class);
 
-        for (Class<? extends AbstractNatsHandler> clazz : clazzSet) {
-            NatsHandler handler = SpringUtil.getBean(clazz);
+        for (Class<? extends AbstractNatsLiteHandler> clazz : clazzSet) {
+            NatsLiteHandler handler = SpringUtil.getBean(clazz);
             ClientType taskType = handler.getClientType();
             HANDLER_MAP.put(taskType ,  handler);
         }

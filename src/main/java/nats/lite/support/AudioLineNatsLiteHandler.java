@@ -10,8 +10,7 @@ import org.springframework.stereotype.Component;
  * @description : A线nats客户端
  */
 
-@Component
-public class AudioLineNatsHandler extends AbstractNatsHandler {
+public class AudioLineNatsLiteHandler extends AbstractNatsLiteHandler {
 
 
     /**
@@ -27,7 +26,7 @@ public class AudioLineNatsHandler extends AbstractNatsHandler {
 
 
 
-    public AudioLineNatsHandler() {
+    public AudioLineNatsLiteHandler() {
         this.clientType = ClientType.Audio_Line;
     }
 

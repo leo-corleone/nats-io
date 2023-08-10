@@ -10,7 +10,7 @@ import io.nats.client.api.PublishAck;
  * @time: 2022/9/20
  * @author: .sun
  */
-public interface NatsHandler {
+public interface NatsLiteHandler {
 
 
     /**

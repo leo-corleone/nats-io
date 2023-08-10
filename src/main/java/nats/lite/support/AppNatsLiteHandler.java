@@ -13,10 +13,10 @@ import org.springframework.core.annotation.Order;
  **/
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class AppNatsHandler extends AbstractNatsHandler {
+public class AppNatsLiteHandler extends AbstractNatsLiteHandler {
 
-    public AppNatsHandler() {
-       clientType = ClientType.APPLICATION;
+    public AppNatsLiteHandler() {
+       clientType = ClientType.Application;
     }
 
     @Override

@@ -32,7 +32,7 @@ import java.util.concurrent.ExecutionException;
  */
 
 @Slf4j
-public abstract class AbstractNatsHandler implements NatsHandler, DisposableBean {
+public abstract class AbstractNatsLiteHandler implements NatsLiteHandler, DisposableBean {
 
     protected ClientType clientType;
 
@@ -50,7 +50,6 @@ public abstract class AbstractNatsHandler implements NatsHandler, DisposableBean
     private final Duration drainTimeout = Duration.ofSeconds(20);
 
     private final Duration requestTimeout = Duration.ofSeconds(20);
-
 
     public void init(NatsConfigurationTranslator translator) {
         this.nc = translator.getConnection();
@@ -191,11 +190,8 @@ public abstract class AbstractNatsHandler implements NatsHandler, DisposableBean
     public <T> T request(String subject, Object payload, Duration duration, TypeReference<T> clazz) {
         Message message;
         try {
-            log.debug("client type [{}] start nats request , subject:{}  parameters:{}", clientType, subject, payload);
             message = nc.request(subject, JSON.toJSONBytes(payload), duration);
             String result = new String(message.getData());
-
-            log.debug("client type [{}] nats request end ,  subject:{} , consume time(ms):{}", clientType, subject);
             return JSONObject.parseObject(result, clazz);
         } catch (InterruptedException e) {
             e.printStackTrace();

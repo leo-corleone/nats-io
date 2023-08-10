@@ -11,13 +11,12 @@ import org.springframework.stereotype.Component;
  * @author: .sun
  */
 
-@Component
-public class CloudMidisNatsHandler extends AbstractNatsHandler {
+public class CloudMidisNatsLiteHandler extends AbstractNatsLiteHandler {
 
 
     private final String connectionName = "TZ_APP_CloudMidis";
 
-    public CloudMidisNatsHandler() {
+    public CloudMidisNatsLiteHandler() {
         clientType = ClientType.CloudMidis;
     }
 

@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import nats.lite.annotation.Publish;
 import nats.lite.annotation.Request;
 import nats.lite.resolver.*;
-import nats.lite.support.NatsHandler;
-import nats.lite.support.NatsHandlerFactory;
+import nats.lite.support.NatsLiteHandler;
+import nats.lite.support.NatsLiteHandlerFactory;
 import nats.lite.enums.ClientType;
 import io.nats.client.Message;
 import io.nats.client.api.PublishAck;
@@ -97,7 +97,7 @@ public class NatsProxy {
             LOG.info("PUBLISH --> ClientType:[{" + proxyServer + "}] ,data:[" + new String(message.getData()) + "]  , subject:[" +  message.getSubject() +"], " +
                     "replyTo:[" + message.getReplyTo() + "] , isJetStreamPublish:[" + publish.isJetStreamPublish() + "]");
         }
-        NatsHandler handler = NatsHandlerFactory.getHandler(proxyServer);
+        NatsLiteHandler handler = NatsLiteHandlerFactory.getHandler(proxyServer);
         PublishAck publishAck = null;
         long currentTime = System.currentTimeMillis();
         if (publish.isJetStreamPublish()){
@@ -118,7 +118,7 @@ public class NatsProxy {
             LOG.info("REQUEST --> ClientType:[{" + proxyServer + "}] ,data:[" + new String(message.getData()) + "] , subject:[" +  message.getSubject() +"], " +
                     "replyTo:[" + message.getReplyTo() + "] ,Timeout:[" + request.timeout() + "s]");
         }
-        NatsHandler handler = NatsHandlerFactory.getHandler(proxyServer);
+        NatsLiteHandler handler = NatsLiteHandlerFactory.getHandler(proxyServer);
         long currentTime = System.currentTimeMillis();
         Message msg = null;
         try {

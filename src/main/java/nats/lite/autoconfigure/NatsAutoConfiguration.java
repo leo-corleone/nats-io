@@ -1,16 +1,15 @@
 package nats.lite.autoconfigure;
 
 import cn.hutool.core.util.ObjectUtil;
+import lombok.extern.slf4j.Slf4j;
 import nats.lite.configuration.NatsConfiguration;
 import nats.lite.configuration.NatsConfigurationTranslator;
 import nats.lite.configuration.NatsConnectionFactory;
-import nats.lite.support.AppNatsHandler;
-import nats.lite.support.NatsClient;
-import nats.lite.support.NatsManager;
+import nats.lite.factory.NatsLiteFactoryBean;
 import nats.lite.js.JetStreamBuilder;
 import nats.lite.listener.NatsConnectionListener;
 import nats.lite.listener.NatsErrorListener;
-import lombok.extern.slf4j.Slf4j;
+import nats.lite.support.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -47,30 +46,44 @@ public class NatsAutoConfiguration {
     }
 
 
-
     @Bean
-    @ConditionalOnProperty(value = "spring.nats.enable" , havingValue = "true")
-    public AppNatsHandler appNatsHandler(NatsConfiguration configuration , List<JetStreamBuilder> jetStreamBuilders){
-
-        AppNatsHandler natsHandler = new AppNatsHandler();
-        if (ObjectUtil.isNotEmpty(jetStreamBuilders)){
-            natsHandler.init(new NatsConfigurationTranslator(configuration ,jetStreamBuilders));
-        }else {
+    @ConditionalOnProperty(value = "spring.nats.enable", havingValue = "true")
+    public NatsLiteHandler applicationNatsLite(NatsConfiguration configuration, List<JetStreamBuilder> jetStreamBuilders) {
+        AppNatsLiteHandler natsHandler = new AppNatsLiteHandler();
+        if (ObjectUtil.isNotEmpty(jetStreamBuilders)) {
+            natsHandler.init(new NatsConfigurationTranslator(configuration, jetStreamBuilders));
+        } else {
             natsHandler.init(new NatsConfigurationTranslator(configuration));
         }
         return natsHandler;
     }
 
 
-
     @Bean
-    public NatsClient natsClient(NatsManager manager){
-        NatsClient natsClient = new NatsClient();
-        natsClient.setManager(manager);
-        return natsClient;
+    public NatsLiteHandler midisNatsLite() {
+        MidisNatsLiteHandler midisNatsLiteHandler = new MidisNatsLiteHandler();
+        NatsLiteFactoryBean factoryBean = new NatsLiteFactoryBean();
+        factoryBean.setHandler(midisNatsLiteHandler);
+        return factoryBean.getObject();
     }
 
 
+    @Bean
+    public NatsLiteHandler cloudMidisNatsLite() {
+        CloudMidisNatsLiteHandler midisNatsLiteHandler = new CloudMidisNatsLiteHandler();
+        NatsLiteFactoryBean factoryBean = new NatsLiteFactoryBean();
+        factoryBean.setHandler(midisNatsLiteHandler);
+        return factoryBean.getObject();
+    }
+
+
+    @Bean
+    public NatsLiteHandler audioNatsLite() {
+        AudioLineNatsLiteHandler midisNatsLiteHandler = new AudioLineNatsLiteHandler();
+        NatsLiteFactoryBean factoryBean = new NatsLiteFactoryBean();
+        factoryBean.setHandler(midisNatsLiteHandler);
+        return factoryBean.getObject();
+    }
 
 
 }
