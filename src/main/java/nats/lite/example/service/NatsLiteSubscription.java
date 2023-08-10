@@ -3,6 +3,7 @@ package nats.lite.example.service;
 import nats.lite.annotation.NatsListener;
 import nats.lite.annotation.Subscribe;
 import io.nats.client.Message;
+import nats.lite.example.domain.NatsData;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,14 +16,15 @@ import org.springframework.stereotype.Component;
 @NatsListener
 public class NatsLiteSubscription {
 
-    @Subscribe(topic = "$request.get.data.nats.proxy" , reply = true , log = true)
-    public String subscribe(String str , Message message){
-        return "1231212";
+    @Subscribe(topic = "$report.update.data.nats.lite" , log = true)
+    public void subscribePublish(NatsData natsData){
+        System.out.println(natsData);
     }
 
-    @Subscribe(topic = "$request.get.data.nats.*" , reply = true , log = true)
-    public String subscribeWarcaild(String str , Message message){
-        return "123178789878212";
+    @Subscribe(topic = "$request.get.data.nats.lite" , reply = true , log = true)
+    public String subscribeRequest(NatsData natsData){
+        System.out.println(natsData);
+        return "success";
     }
 
 }

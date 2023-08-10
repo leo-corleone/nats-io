@@ -81,7 +81,7 @@ public interface NatsLiteHandler {
 
 
 
-    Message request(Message message , Integer second);
+    Message request(Message message , long second);
 
 
     /**

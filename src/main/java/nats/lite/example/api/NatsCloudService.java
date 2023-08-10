@@ -10,21 +10,15 @@ import nats.lite.example.domain.NatsData;
  * @description :
  */
 
-
-
 @NatsServer(proxyClient = ClientType.Application)
 public interface NatsCloudService {
 
 
-    @Publish(topic = "$report.update.data.{project}.{module}")
-    void publish(@PathSubject String project,
-                 @PathSubject String module ,
-                 @Payload NatsData natsData);
+    @Publish(topic = "$report.update.data.nats.lite")
+    void publish(@Payload NatsData natsData);
 
 
 
-    @Request(topic = "$request.get.data.{project}.{module}")
-    Integer request(@PathSubject String project,
-                    @PathSubject String module ,
-                    @Payload NatsData natsData);
+    @Request(topic = "$request.get.data.nats.lite")
+    String request(@Payload NatsData natsData);
 }

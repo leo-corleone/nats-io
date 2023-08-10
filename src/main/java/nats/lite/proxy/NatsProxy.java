@@ -116,20 +116,20 @@ public class NatsProxy {
     private Message handleRequest(Message message ,Request request) {
         if (request.log()){
             LOG.info("REQUEST --> ClientType:[{" + proxyServer + "}] ,data:[" + new String(message.getData()) + "] , subject:[" +  message.getSubject() +"], " +
-                    "replyTo:[" + message.getReplyTo() + "] ,Timeout:[" + request.timeout() + "s]");
+                    "replyTo:[" + message.getReplyTo() + "] ,Timeout:[" + request.timeout() + "ms]");
         }
         NatsLiteHandler handler = NatsLiteHandlerFactory.getHandler(proxyServer);
-        long currentTime = System.currentTimeMillis();
         Message msg = null;
         try {
-             msg = handler.request(message , request.timeout());
+            long currentTime = System.currentTimeMillis();
+            msg = handler.request(message , request.timeout());
+            if (request.log()){
+                LOG.info("Finish REQUEST <-- ClientType:[{" + proxyServer+ "}] , subject:[" +  message.getSubject() +"], " +
+                        "replyTo:[" + message.getReplyTo() + "] , request data:[" + new String(message.getData()) + "]  , request result:[" + new String(msg.getData()) + "] , consume:[" + (System.currentTimeMillis() - currentTime)  + "ms]");
+            }
         }catch (Exception e){
              LOG.error("REQUEST FAILURE  ClientType:[{" + proxyServer+ "}]  subject:[" +  message.getSubject() +"]" ,e);
              throw e;
-        }
-        if (request.log()){
-            LOG.info("Finish REQUEST <-- ClientType:[{" + proxyServer+ "}] , subject:[" +  message.getSubject() +"], " +
-                    "replyTo:[" + message.getReplyTo() + "] , request data:[" + new String(message.getData()) + "]  , request result:[" + new String(msg.getData()) + "] , consume:[" + (System.currentTimeMillis() - currentTime)  + "ms]");
         }
         return msg;
     }

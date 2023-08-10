@@ -17,7 +17,7 @@ public @interface Request {
 
     String topic() default "";
 
-    int timeout() default 5;
+    long timeout() default  1;
 
     boolean log() default true;
 

@@ -24,15 +24,15 @@ public class NatsLiteService {
     public void publish(){
         NatsData natsData = new NatsData();
         natsData.setId(1100111001);
-        natsData.setName("nats_data");
-        natsCloudService.publish("nats", "proxy" , natsData);
+        natsData.setName("nats_lite_project");
+        natsCloudService.publish(natsData);
     }
 
     public void request(){
         NatsData natsData = new NatsData();
         natsData.setId(1100111001);
-        natsData.setName("nats_data");
-        Integer request = natsCloudService.request("nats", "proxy" , natsData);
+        natsData.setName("nats_lite_project");
+        String request = natsCloudService.request( natsData);
     }
 
 

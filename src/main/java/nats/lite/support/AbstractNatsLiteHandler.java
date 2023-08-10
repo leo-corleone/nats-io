@@ -109,10 +109,10 @@ public abstract class AbstractNatsLiteHandler implements NatsLiteHandler, Dispos
     }
 
     @Override
-    public Message request(Message message , Integer second) {
+    public Message request(Message message , long ms) {
         Message msg = null;
         try {
-            msg = nc.requestWithTimeout(message , Duration.ofSeconds(second)).get();;
+            msg = nc.requestWithTimeout(message ,Duration.ofMillis(ms)).get();;
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
