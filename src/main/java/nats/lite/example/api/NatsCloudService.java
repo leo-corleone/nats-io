@@ -14,7 +14,7 @@ import nats.lite.example.domain.NatsData;
 public interface NatsCloudService {
 
 
-    @Publish(topic = "$report.update.data.nats.lite")
+    @Publish(topic = "$report.update.data.nats.lite.{ser}")
     void publish(@Payload NatsData natsData);
 
 

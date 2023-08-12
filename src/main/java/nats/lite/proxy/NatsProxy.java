@@ -25,24 +25,27 @@ import java.util.List;
  */
 public class NatsProxy {
 
-
     private static Log LOG = LogFactory.getLog(NatsProxy.class);
 
-    private final List<MethodParameterResolver> paramResolvers = new ArrayList<MethodParameterResolver>(){{
+    private final ClientType proxyServer;
+
+    private static final List<MethodParameterResolver> PARAM_RESOLVERS = new ArrayList<MethodParameterResolver>(){{
         add(new PathSubjectParameterResolver());
         add(new PayloadParameterResolver());
         add(new HeadersParameterResolver());
         add(new ReplySubjectParameterResolver());
     }};
 
-
-    private final List<ReturnValueResolver> returnResolvers = new ArrayList<ReturnValueResolver>(){{
+    private static final List<ReturnValueResolver> RETURN_RESOLVERS = new ArrayList<ReturnValueResolver>(){{
         add(new DefaultReturnValueResolver());
     }};
 
-    private ClientType proxyServer;
-
-
+    public static void addParameterResolver(MethodParameterResolver resolver){
+        PARAM_RESOLVERS.add(resolver);
+    }
+    public static void addReturnValueResolver(ReturnValueResolver resolver){
+        RETURN_RESOLVERS.add(resolver);
+    }
     public NatsProxy(ClientType proxyServer) {
         this.proxyServer = proxyServer;
     }
@@ -68,7 +71,7 @@ public class NatsProxy {
 
     private Object convertorMessage(Method method , Request request, Message message) {
         Class<? extends ReturnValueResolver> returnResolver = request.returnResolver();
-        for (ReturnValueResolver resolver : returnResolvers) {
+        for (ReturnValueResolver resolver : RETURN_RESOLVERS) {
             if (resolver.getClass() == returnResolver && resolver.match(proxyServer)){
                return  resolver.convertResult(message , method.getReturnType());
             }
@@ -82,7 +85,7 @@ public class NatsProxy {
         builder.subject(subject);
         Parameter[] parameters = method.getParameters();
         for (int i = 0; i < parameters.length; i++) {
-            for (MethodParameterResolver paramResolver : paramResolvers) {
+            for (MethodParameterResolver paramResolver : PARAM_RESOLVERS) {
                 if (paramResolver.match(parameters[i])){
                     paramResolver.assembleMessage(builder , parameters[i] , args[i]);
                     break;

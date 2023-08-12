@@ -9,6 +9,7 @@ import nats.lite.factory.NatsLiteFactoryBean;
 import nats.lite.js.JetStreamBuilder;
 import nats.lite.listener.NatsConnectionListener;
 import nats.lite.listener.NatsErrorListener;
+import nats.lite.proxy.NatsProxy;
 import nats.lite.support.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -32,6 +33,7 @@ public class NatsAutoConfiguration {
 
     public NatsAutoConfiguration(NatsProperties properties) {
         this.properties = properties;
+
     }
 
 
